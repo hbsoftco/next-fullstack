@@ -1,4 +1,14 @@
+import Database from "@/config/db.config";
+import { ConnectOptions } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
+
+const uri = process.env.MONGO_URL;
+const options: ConnectOptions = {
+  // add your options here if needed
+};
+
+const db = Database.getInstance(uri!, options);
+db.connect();
 
 interface Params {
   params: {
@@ -13,8 +23,7 @@ export async function GET(request: NextRequest, { params }: Params) {
   });
 }
 
-
-export async function PUT(request: NextRequest, { params }: Params) {  
+export async function PUT(request: NextRequest, { params }: Params) {
   return NextResponse.json({
     message: "Put particular blog",
     blogId: params.blogId,
