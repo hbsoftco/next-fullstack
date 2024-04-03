@@ -2,7 +2,6 @@
 import { Blog } from "@/models/Blog";
 import Link from "next/link";
 import React from "react";
-import Image from "next/image"; // Import next/image
 
 interface Props {
   blog: Blog;

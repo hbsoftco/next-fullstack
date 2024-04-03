@@ -39,10 +39,24 @@ export async function GET(request: NextRequest, { params }: Params) {
 }
 
 export async function PUT(request: NextRequest, { params }: Params) {
-  return NextResponse.json({
-    message: "Put particular blog",
-    blogId: params.blogId,
-  });
+  try {
+    const body = await request.json();
+    await Blog.findByIdAndUpdate(params.blogId, body);
+
+    return NextResponse.json(
+      {
+        message: "Blog updated successfully",
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: (error as Error).message,
+      },
+      { status: 500 }
+    );
+  }
 }
 
 export async function DELETE(request: NextRequest, { params }: Params) {

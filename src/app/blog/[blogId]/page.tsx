@@ -24,13 +24,13 @@ const Page = async ({ params }: PageProps) => {
 
         <div className="flex gap-3">
           <Button label="Cancel" type="outline">
-            <Link href="/">Cancel</Link>
+            <Link href="/">Back</Link>
           </Button>
           <Button label="Delete" type="danger">
             <Link href="/">Delete</Link>
           </Button>
           <Button label="Edit" type="primary">
-            <Link href="/">Edit</Link>
+            <Link href={`/edit-blog/${params.blogId}`}>Edit</Link>
           </Button>
         </div>
       </div>
