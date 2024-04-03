@@ -4,6 +4,8 @@ import { useState } from "react";
 import Button from "./Button";
 import InputField from "./InputField";
 import TextAreaField from "./TextAreaField";
+import toast from "react-hot-toast";
+import BlogRepository from "@/services/blog.repository";
 
 interface BlogFormState {
   title: string;
@@ -24,12 +26,19 @@ const BlogForm = () => {
       setBlog({ ...blog, [fieldName]: e.target.value });
     };
 
-  const handleSave = () => {
-    console.log(blog);
+  const handleSave = async () => {
+    try {
+      await BlogRepository.create(blog);
+      toast.success("Blog created successfully.");
+    } catch (error: unknown) {
+      console.log(error);
+
+      toast.error((error as Error).message);
+    }
   };
 
   const handleCancel = () => {
-    // cancel code
+    BlogRepository.getAll();
   };
 
   return (

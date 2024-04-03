@@ -1,4 +1,5 @@
 import Database from "@/config/db.config";
+import { Blog } from "@/models/blog.model";
 import { ConnectOptions } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -15,19 +16,32 @@ interface Params {
   };
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
+  const blogs = await Blog.find();
+
   return NextResponse.json(
     {
       message: "Get all blogs",
+      data: blogs,
     },
     { status: 200 }
   );
 }
 
 export const POST = async (request: NextRequest) => {
-  const body = await request.json();
-  return NextResponse.json(
-    { message: "Operation successful", body },
-    { status: 200 }
-  );
+  try {
+    const body = await request.json();
+    await Blog.create(body);
+    return NextResponse.json(
+      { message: "Operation successful", body },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: (error as Error).message,
+      },
+      { status: 500 }
+    );
+  }
 };
