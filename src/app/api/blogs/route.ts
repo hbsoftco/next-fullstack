@@ -1,5 +1,5 @@
 import Database from "@/config/db.config";
-import { Blog } from "@/models/blog.model";
+import { Blog } from "@/schemas/blog.model";
 import { ConnectOptions } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -21,7 +21,7 @@ export async function GET() {
 
   return NextResponse.json(
     {
-      message: "Get all blogs",
+      message: "Blogs fetched successfully",
       data: blogs,
     },
     { status: 200 }
@@ -34,7 +34,7 @@ export const POST = async (request: NextRequest) => {
     await Blog.create(body);
     return NextResponse.json(
       { message: "Operation successful", body },
-      { status: 200 }
+      { status: 201 }
     );
   } catch (error) {
     return NextResponse.json(

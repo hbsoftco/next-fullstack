@@ -1,22 +1,24 @@
 import axiosInstance from "@/lib/axios.config";
+import { Blog } from "@/models/Blog";
 import toast from "react-hot-toast";
-
-type Blog = {
-  title: string;
-  image: string;
-  description?: string;
-};
 
 type IBlogRepository = {
   getAll: () => Promise<Blog[]>;
+  getById: (id: string) => Promise<Blog>;
   create: (blog: Blog) => Promise<void>;
 };
 
 const BlogRepository: IBlogRepository = {
   getAll: async () => {
     try {
-      const response = await axiosInstance.get("/blogs");
-      return response.data;
+      return (await axiosInstance.get("/blogs")).data.data;
+    } catch (error) {
+      return error;
+    }
+  },
+  getById: async (id: string) => {
+    try {
+      return (await axiosInstance.get(`/blogs/${id}`)).data.data;
     } catch (error) {
       toast.error((error as Error).message);
     }
