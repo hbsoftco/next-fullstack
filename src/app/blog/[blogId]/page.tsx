@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Button from "@/components/Button";
+import DeleteBlogBtn from "@/components/DeleteBlogBtn";
 import BlogRepository from "@/services/blog.repository";
 import Link from "next/link";
 
@@ -26,9 +27,7 @@ const Page = async ({ params }: PageProps) => {
           <Button label="Cancel" type="outline">
             <Link href="/">Back</Link>
           </Button>
-          <Button label="Delete" type="danger">
-            <Link href="/">Delete</Link>
-          </Button>
+          <DeleteBlogBtn blogId={params.blogId} />
           <Button label="Edit" type="primary">
             <Link href={`/edit-blog/${params.blogId}`}>Edit</Link>
           </Button>

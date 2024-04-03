@@ -60,8 +60,21 @@ export async function PUT(request: NextRequest, { params }: Params) {
 }
 
 export async function DELETE(request: NextRequest, { params }: Params) {
-  return NextResponse.json({
-    message: "Delete particular blog",
-    blogId: params.blogId,
-  });
+  try {
+    await Blog.findByIdAndDelete(params.blogId);
+
+    return NextResponse.json(
+      {
+        message: "Blog deleted successfully",
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: (error as Error).message,
+      },
+      { status: 500 }
+    );
+  }
 }

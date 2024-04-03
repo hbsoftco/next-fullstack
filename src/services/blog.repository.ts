@@ -41,8 +41,6 @@ const BlogRepository: IBlogRepository = {
   },
   update: async (id: string, blog: Blog) => {
     try {
-      console.log('------> I am in repo');
-      
       return await axiosInstance.put(`/blogs/${id}`, blog);
     } catch (error) {
       // return error;

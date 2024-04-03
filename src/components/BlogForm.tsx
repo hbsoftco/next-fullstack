@@ -26,9 +26,6 @@ const BlogForm = ({ blogData }: { blogData?: Blog }) => {
   const handleSave = async () => {
     try {
       if (blogData) {
-        console.log("======================>", blogData._id);
-        console.log("======================>", blog);
-
         await BlogRepository.update(blogData._id!, blog);
         toast.success("Blog updated successfully.");
       } else {
