@@ -17,15 +17,24 @@ interface Params {
 }
 
 export async function GET() {
-  const blogs = await Blog.find();
+  try {
+    const blogs = await Blog.find();
 
-  return NextResponse.json(
-    {
-      message: "Blogs fetched successfully",
-      data: blogs,
-    },
-    { status: 200 }
-  );
+    return NextResponse.json(
+      {
+        message: "Blogs fetched successfully",
+        data: blogs,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: (error as Error).message,
+      },
+      { status: 500 }
+    );
+  }
 }
 
 export const POST = async (request: NextRequest) => {

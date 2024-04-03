@@ -6,6 +6,7 @@ import InputField from "./InputField";
 import TextAreaField from "./TextAreaField";
 import toast from "react-hot-toast";
 import BlogRepository from "@/services/blog.repository";
+import { useRouter } from "next/navigation";
 
 interface BlogFormState {
   title: string;
@@ -14,6 +15,7 @@ interface BlogFormState {
 }
 
 const BlogForm = () => {
+  const router = useRouter();
   const [blog, setBlog] = useState<BlogFormState>({
     title: "",
     description: "",
@@ -30,15 +32,13 @@ const BlogForm = () => {
     try {
       await BlogRepository.create(blog);
       toast.success("Blog created successfully.");
+
+      router.push("/");
     } catch (error: unknown) {
       console.log(error);
 
       toast.error((error as Error).message);
     }
-  };
-
-  const handleCancel = () => {
-    BlogRepository.getAll();
   };
 
   return (
@@ -64,7 +64,11 @@ const BlogForm = () => {
         onChange={handleChange("description")}
       />
       <div className="flex justify-end gap-4 mt-2">
-        <Button label="Cancel" type="outline" onClick={handleCancel} />
+        <Button
+          label="Cancel"
+          type="outline"
+          onClick={() => router.push("/")}
+        />
         <Button label="Save" onClick={handleSave} />
       </div>
     </div>

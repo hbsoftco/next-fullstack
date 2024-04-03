@@ -20,14 +20,14 @@ const BlogRepository: IBlogRepository = {
     try {
       return (await axiosInstance.get(`/blogs/${id}`)).data.data;
     } catch (error) {
-      toast.error((error as Error).message);
+      return error;
     }
   },
   create: async (blog: Blog) => {
     try {
       await axiosInstance.post("/blogs", blog);
     } catch (error) {
-      toast.error((error as Error).message);
+      // toast.error((error as Error).message);
     }
   },
 };

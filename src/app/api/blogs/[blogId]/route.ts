@@ -1,4 +1,5 @@
 import Database from "@/config/db.config";
+import { Blog } from "@/schemas/blog.model";
 import { ConnectOptions } from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -17,10 +18,24 @@ interface Params {
 }
 
 export async function GET(request: NextRequest, { params }: Params) {
-  return NextResponse.json({
-    message: "Get particular blog",
-    blogId: params.blogId,
-  });
+  try {
+    const blog = await Blog.findById(params.blogId);
+
+    return NextResponse.json(
+      {
+        message: "Blog fetched successfully",
+        data: blog,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: (error as Error).message,
+      },
+      { status: 500 }
+    );
+  }
 }
 
 export async function PUT(request: NextRequest, { params }: Params) {
