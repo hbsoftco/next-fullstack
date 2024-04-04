@@ -1,3 +1,5 @@
+export const revalidate = 0;
+
 import BlogCard from "@/components/BlogCard";
 import Button from "@/components/Button";
 import BlogRepository from "@/services/blog.repository";
